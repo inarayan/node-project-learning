@@ -1,3 +1,5 @@
 module.exports.user = function(req, res){
-    res.send('Welcome to Users Page');
+    //A controller will tell the page name to which information needs to be rendered
+    //using res.render(viewName, anyObject)
+    res.render('usersProfile', {title:"A profile Page"});
 }
