@@ -3,8 +3,11 @@ const port = 8002;
 const app = express();
 //first step is require
 const layouts = require('express-ejs-layouts');
+const db = require('./config/mongoose');
+const reqBodyParser = require('body-parser');
 
 app.use(express.static('./assets'));
+app.use(reqBodyParser.urlencoded({extended:true}));
 
 app.use(layouts);
 app.set('layout extractStyles', true);
