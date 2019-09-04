@@ -7,15 +7,27 @@ module.exports.user = function(req, res){
 }
 
 module.exports.user_signup=function(req,res){
-    res.render('userSignUp',{
-        title:"CodedialSignup Page"
-    });
+    if(req.isAuthenticated()){
+        res.redirect('/users/profile');
+    }
+    else{
+        res.render('userSignUp',{
+            title:"CodedialSignup Page"
+        });
+    }
+    
 }
 
 module.exports.user_signin=function(req,res){
-    res.render('userSignin',{
-        title:"CodedialSignIn Page"
-    });
+    if(req.isAuthenticated()){
+        res.redirect('/users/profile');
+    }
+    else{
+        res.render('userSignin',{
+            title:"CodedialSignIn Page"
+        });
+    }
+    
 }
 
 
@@ -47,5 +59,11 @@ module.exports.createUser=function(req,res){
 }
 
 module.exports.createUserSession=function(req,res){
-    
+    console.log("inside create ser session")
+    res.redirect('/users/profile');
+}
+
+module.exports.destroySession=function(req,res){
+ req.logout();
+    res.redirect('/');
 }
