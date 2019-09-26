@@ -20,7 +20,8 @@ module.exports.user_signup=function(req,res){
 
 module.exports.user_signin=function(req,res){
     if(req.isAuthenticated()){
-        res.redirect('/users/profile');
+        //res.redirect('/users/profile');
+        res.redirect('/')
     }
     else{
         res.render('userSignin',{

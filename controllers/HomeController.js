@@ -17,7 +17,7 @@ module.exports.home = function(req, res){
             return;
 
         }
-        console.log("Retreiving post" +posts);
+        
         return res.render('home', {
             "title":"Codedial",
             "posts":posts

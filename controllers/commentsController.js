@@ -8,8 +8,6 @@ module.exports.create = function(req, res){
     Post.findById(req.body.post, function(err, post){
 
         if(post){
-            console.log(post);
-            console.log(Comments);
             Comments.create({
                 content:req.body.content,
                 post:req.body.post,
@@ -20,8 +18,6 @@ module.exports.create = function(req, res){
                     console.log("Comment errror");
                     return ;
                 }
-
-                console.log("Post" + post.comments)
                 //adding comment to the post
                 post.comments.push(comment);
                 post.save();
