@@ -1,9 +1,36 @@
 const User = require('../models/user');
 
-module.exports.user = function(req, res){
+module.exports.profile = function(req, res){
     //A controller will tell the page name to which information needs to be rendered
     //using res.render(viewName, anyObject)
-    res.render('usersProfile', {title:"A profile Page"});
+    console.log('inside profile page');
+    if(req.params.id){
+        User.findById(req.params.id, function(err, user){
+            return res.render('usersProfile',
+             {title:"A profile Page",
+             profile_user:user
+                });
+        })
+    }
+   
+    
+}
+
+module.exports.update = function(req, res){
+    //A controller will tell the page name to which information needs to be rendered
+    //using res.render(viewName, anyObject)
+    console.log('inside update page');
+    
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+            return res.redirect('back');
+        })
+    }
+    else{
+        res.status(401).send('Unauthorized');
+    }
+    
+    
 }
 
 module.exports.user_signup=function(req,res){
@@ -20,7 +47,6 @@ module.exports.user_signup=function(req,res){
 
 module.exports.user_signin=function(req,res){
     if(req.isAuthenticated()){
-        //res.redirect('/users/profile');
         res.redirect('/')
     }
     else{
@@ -61,7 +87,7 @@ module.exports.createUser=function(req,res){
 
 module.exports.createUserSession=function(req,res){
     console.log("inside create ser session")
-    res.redirect('/users/profile');
+    res.redirect('back');
 }
 
 module.exports.destroySession=function(req,res){
