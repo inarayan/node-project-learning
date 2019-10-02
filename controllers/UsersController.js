@@ -86,11 +86,14 @@ module.exports.createUser=function(req,res){
 }
 
 module.exports.createUserSession=function(req,res){
-    console.log("inside create ser session")
-    res.redirect('back');
+    console.log("inside create ser session");
+    req.flash('success', 'logeed in sucessfully');
+
+    res.redirect('/');
 }
 
 module.exports.destroySession=function(req,res){
  req.logout();
+ req.flash('success', 'logeed out sucessfully');
     res.redirect('/');
 }

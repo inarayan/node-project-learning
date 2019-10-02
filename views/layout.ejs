@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <head>
     <title><%= title%></title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
     <link rel="stylesheet"  href="layout.css">
    <%- style %>
 </head>
@@ -8,5 +11,23 @@
     <%- include('_header');-%>
     <%- body-%>
     <%- include('_footer');-%>
+
+<script>
+    <% if(flash.success && flash.success.length>0){%>
+        new Noty({
+            type: 'success',
+            layout: 'topRight',
+            text: '<%= flash.success%>'
+    }).show();
+    <%}%>
+
+    <% if(flash.error && flash.error.length>0){%>
+        new Noty({
+            type: 'error',
+            layout: 'topRight',
+            text: '<%= flash.error%>'
+    }).show();
+    <%}%>
+</script>
 </body>
 </html>

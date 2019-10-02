@@ -10,6 +10,8 @@ const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
 
 const passportLocal = require('./config/passport-local-strategy');
+const flash = require('connect-flash');
+const customMWare = require('./config/middleware');
 
 app.use(session({
     name:'codeial',
@@ -30,6 +32,10 @@ app.use(passport.session());
 
 //call the setAuthenticated user to set the user details in case it is available
 app.use(passport.setAuthenticatedUser);
+
+
+app.use(flash());
+app.use(customMWare.setFlash);
 
 app.use(express.static('./assets'));
 app.use(reqBodyParser.urlencoded({extended:true}));
