@@ -48,6 +48,8 @@ app.use('/', require('./routers/index'));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+//make the upload path available to the function
+app.use('/uploads' , express.static(__dirname + '/uploads'));
 
 app.listen(port, function(err){
     if(err)

@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = function(req, res){
     //A controller will tell the page name to which information needs to be rendered
@@ -16,20 +18,57 @@ module.exports.profile = function(req, res){
     
 }
 
-module.exports.update = function(req, res){
+module.exports.update = async function(req, res){
     //A controller will tell the page name to which information needs to be rendered
     //using res.render(viewName, anyObject)
-    console.log('inside update page');
+    // console.log('inside update page');
     
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+    //         return res.redirect('back');
+    //     })
+    // }
+    // else{
+    //     res.status(401).send('Unauthorized');
+    // }
+   
     if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
-            return res.redirect('back');
-        })
+
+        try{
+           
+            let user = await User.findById(req.params.id);
+            
+            
+            User.uploadedAvatar(req, res, function(err){
+                
+                if(err){
+                    console.log('********Multer Error');
+                }
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname,"..",user.avatar));
+                    }
+                    user.avatar = User.avatarPath+"/"+req.file.filename;
+                }
+                
+                user.save();
+                return res.redirect('back');
+            })
+
+        }catch(error){
+            req.flash('error', error);
+            res.redirect('back');
+
+        }
     }
     else{
+        req.flash('error','UnAuthorized');
         res.status(401).send('Unauthorized');
     }
-    
     
 }
 
