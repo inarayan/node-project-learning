@@ -9,4 +9,8 @@ router.use('/users', require('./users'))
 router.use('/posts', require('./post'));
 router.use('/comments', require('./comments'));
 
+
+//instruct the api router to be used in the case the url contains /api
+router.use('/api',require('./api'));
+
 module.exports = router;

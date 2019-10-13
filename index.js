@@ -10,6 +10,10 @@ const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
 
 const passportLocal = require('./config/passport-local-strategy');
+
+//use passport jwt strategy
+const passportJWT = require('./config/passport-jwt-strategy');
+
 const flash = require('connect-flash');
 const customMWare = require('./config/middleware');
 
@@ -43,6 +47,7 @@ app.use(reqBodyParser.urlencoded({extended:true}));
 app.use(layouts);
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
+
 app.use('/', require('./routers/index'));
 
 app.set('view engine', 'ejs');
